@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 
 const PORT = process.env.PORT || 3001;
@@ -15,6 +16,20 @@ app.use(express.urlencoded({  extended: true  }));
 
 
 app.use(express.static('public'));
+
+// api GET route for notes
+app.get('/api/notes', (req, res) =>{
+    const data = fs.readFileSync(path.join(__dirname, 'db', 'db.json'), 'utf8');
+    console.log(data);
+    res.json(JSON.parse(data));
+});
+
+app.post('/api/notes', (req, res) =>{
+    const data = fs.readFileSync(path.join(__dirname, 'db', 'db.json'), 'utf8');
+    console.log(req.body);
+    const notes = JSON.parse(data);
+});
+
 
 // route for homepage
 app.get('/', (req, res) =>
