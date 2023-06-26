@@ -22,6 +22,7 @@ app.get('/api/notes', (req, res) =>{
     res.json(JSON.parse(data));
 });
 
+// api route to create a new note
 app.post('/api/notes', (req, res) =>{
     const data = fs.readFileSync(path.join(__dirname, 'db', 'db.json'), 'utf8');
     console.log(req.body);
@@ -35,6 +36,11 @@ app.post('/api/notes', (req, res) =>{
     fs.writeFileSync(path.join(__dirname, 'db', 'db.json'), JSON.stringify(notes));
     res.json(newNote);
 });
+
+// api route to delete a note
+app.delete('api/notes/:id', (req, res) =>{
+    const data = fs.readFileSync(path.join(__dirname, 'db', 'db.json'), 'utf8');
+})
 
 
 // route for homepage
