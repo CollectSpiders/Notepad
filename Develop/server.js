@@ -38,10 +38,14 @@ app.post('/api/notes', (req, res) =>{
 });
 
 // api route to delete a note
-app.delete('api/notes/:id', (req, res) =>{
+app.delete('/api/notes/:id', (req, res) => {
     const data = fs.readFileSync(path.join(__dirname, 'db', 'db.json'), 'utf8');
-})
-
+    const notes = JSON.parse(data);
+    const noteId = req.params.id;
+    const updatedNotes = notes.filter(note => note.id !== noteId);
+    fs.writeFileSync(path.join(__dirname, 'db', 'db.json'), JSON.stringify(updatedNotes));
+    res.sendStatus(204);
+});
 
 // route for homepage
 app.get('/', (req, res) =>
